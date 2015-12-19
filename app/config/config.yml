@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: es
 
 framework:
     #esi:             ~
@@ -58,7 +58,7 @@ doctrine:
             json: Sonata\Doctrine\Types\JsonType
 
     orm:
-        #auto_generate_proxy_classes: "%kernel.debug%"
+        auto_generate_proxy_classes: "%kernel.debug%"
         #naming_strategy: doctrine.orm.naming_strategy.underscore
         #auto_mapping: true
         
@@ -68,6 +68,7 @@ doctrine:
                 mappings:
                     ApplicationSonataMediaBundle: ~
                     SonataMediaBundle: ~
+                    AppBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -77,6 +78,10 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+#For SonataCoreBundle
+sonata_core: ~
+sonata_core:
+    form_type: horizontal
 
 sonata_block:
     default_contexts: [cms]
@@ -89,9 +94,9 @@ sonata_block:
 sonata_media:
     # if you don't use default namespace configuration
     #class:
-    #    media: MyVendor\MediaBundle\Entity\Media
-    #    gallery: MyVendor\MediaBundle\Entity\Gallery
-    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    #    media: Application\Sonata\MediaBundle\Entity\Media
+    #    gallery: Application\Sonata\MediaBundle\Entity\Gallery
+    #    gallery_has_media: Application\Sonata\MediaBundle\Entity\GalleryHasMedia
     default_context: default
     db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
     contexts:
