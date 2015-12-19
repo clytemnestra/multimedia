@@ -79,9 +79,9 @@ swiftmailer:
     spool:     { type: memory }
 
 #For SonataCoreBundle
-sonata_core: ~
-sonata_core:
-    form_type: horizontal
+#sonata_core: ~
+#sonata_core:
+#    form_type: horizontal
 
 sonata_block:
     default_contexts: [cms]
