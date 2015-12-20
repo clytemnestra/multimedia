@@ -29,6 +29,26 @@ class Media extends BaseMedia
      * @var int $id
      */
     protected $id;
+    
+    /**
+     * @var string
+     */
+    protected $title;
+    
+    /**
+     * @var string
+     */
+    protected $subtitle;
+    
+    /**
+     * @var string
+     */
+    protected $location;
+    
+    /**
+     * @var string
+     */
+    protected $keywords;
 
     /**
      * Get id
@@ -38,5 +58,45 @@ class Media extends BaseMedia
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get title
+     *
+     * @return int $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    
+    /**
+     * Get subtitle
+     *
+     * @return int $subtitle
+     */
+    public function getSubTitle()
+    {
+        return $this->subtitle;
+    }
+    
+    /**
+     * Get location
+     *
+     * @return int $location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+    
+    /**
+     * Get keywords
+     *
+     * @return int $keywords
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 }

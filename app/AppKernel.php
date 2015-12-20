@@ -23,15 +23,19 @@ class AppKernel extends Kernel
             
             // Add your dependencies
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),            
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             // Then add SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
             
-            // MediaBundle
+            //Sonata Classification Bundle
+            new Sonata\ClassificationBundle\SonataClassificationBundle(),
+            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
+            
+            // Sonata Media Bundle
+            new Sonata\MediaBundle\SonataMediaBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
         );
 

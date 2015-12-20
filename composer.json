@@ -24,7 +24,8 @@
         "sonata-project/intl-bundle": "~2.2",
         "symfony/security-acl": "^2.7",
         "sonata-project/media-bundle": "^2.3",
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+		"sonata-project/classification-bundle": "~2.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "~2.7"

@@ -9,20 +9,13 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
     <entity
-        name="Application\Sonata\MediaBundle\Entity\Media"
-        table="media__media"
-        >
+        name="Application\Sonata\ClassificationBundle\Entity\Category"
+        table="classification__category"
+        repository-class="Doctrine\ORM\EntityRepository">
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
-        <!--
-         Add custom fields
-        -->
-        <field name="title" column="title" type="string" length="255"  nullable="true" default="" />
-        <field name="subtitle" column="subtitle" type="string" length="255"  nullable="true" default="" />
-        <field name="location" column="location" type="string" length="255"  nullable="true" default="" />
-        <field name="keywords" column="keywords" type="string" length="255"  nullable="true" default="" />
 
     </entity>
 </doctrine-mapping>
