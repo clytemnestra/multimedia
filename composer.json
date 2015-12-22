@@ -21,7 +21,8 @@
         "sonata-project/easy-extends-bundle": "^2.1",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "^2.3",
-        "symfony/security-acl": "^2.7"
+        "symfony/security-acl": "^2.7",
+        "sonata-project/media-bundle": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

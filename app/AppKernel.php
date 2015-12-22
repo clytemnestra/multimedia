@@ -23,11 +23,14 @@ class AppKernel extends Kernel
             
              // Add your dependencies
             new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            //new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             // Then add SonataAdminBundle
-            //new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
