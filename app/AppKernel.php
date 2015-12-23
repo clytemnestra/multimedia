@@ -21,7 +21,8 @@ class AppKernel extends Kernel
             //Sonata Project
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             
-             // Add your dependencies
+            // Add your dependencies
+            new Sonata\IntlBundle\SonataIntlBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
