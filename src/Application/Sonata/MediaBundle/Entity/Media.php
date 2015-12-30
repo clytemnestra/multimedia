@@ -71,6 +71,14 @@ class Media extends BaseMedia
     }
     
     /**
+     * {@inheritdoc}
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+    
+    /**
      * Get subtitle
      *
      * @return int $subtitle
@@ -78,6 +86,14 @@ class Media extends BaseMedia
     public function getSubTitle()
     {
         return $this->subtitle;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setSubTitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
     }
     
     /**
@@ -91,6 +107,14 @@ class Media extends BaseMedia
     }
     
     /**
+     * {@inheritdoc}
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+    
+    /**
      * Get keywords
      *
      * @return int $keywords
@@ -98,5 +122,13 @@ class Media extends BaseMedia
     public function getKeywords()
     {
         return $this->keywords;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords= $keywords;
     }
 }

@@ -1,3 +1,15 @@
+parameters:
+    sonata.media.admin.orm.media.class: Application\Sonata\MediaBundle\Admin\ORM\MediaAdmin  #Hecho para solucionar lo del allow_extra_fields
+    sonata.media.form.type.media.class: Application\Sonata\MediaBundle\Form\Type\MediaType  #Hecho para solucionar lo del allow_extra_fields
+    #sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\MediaAdmin
+    
+    sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\FileProvider
+    sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\ImageProvider
+    sonata.media.provider.dailymotion.class: Application\Sonata\MediaBundle\Provider\DailyMotionProvider
+    sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\YouTubeProvider
+    sonata.media.provider.vimeo.class: Application\Sonata\MediaBundle\Provider\VimeoProvider
+
+
 sonata_media:
     pixlr:
         enabled:  true
