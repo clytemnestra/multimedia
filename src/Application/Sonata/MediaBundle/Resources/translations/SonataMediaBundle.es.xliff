@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="es" datatype="plaintext" original="SonataMediaBundle.en.xliff">
+        <body>
+            <trans-unit id="form.label_title">
+                <source>form.label_title</source>
+                <target>Título</target>
+            </trans-unit>
+            <trans-unit id="form.label_subtitle">
+                <source>form.label_subtitle</source>
+                <target>Sub Título</target>
+            </trans-unit>
+            <trans-unit id="form.label_location">
+                <source>form.label_location</source>
+                <target>Información de Localidad</target>
+            </trans-unit>
+            <trans-unit id="form.label_keywords">
+                <source>form.label_keywords</source>
+                <target>Keywords</target>
+            </trans-unit>
+            <trans-unit id="list.label_keywords">
+                <source>list.label_keywords</source>
+                <target>Keywords</target>
+            </trans-unit>
+            
+            <trans-unit id="filter.label_title">
+                <source>filter.label_title</source>
+                <target>Título</target>
+            </trans-unit>
+            <trans-unit id="filter.label_subtitle">
+                <source>filter.label_subtitle</source>
+                <target>Sub Título</target>
+            </trans-unit>
+            <trans-unit id="filter.label_location">
+                <source>filter.label_location</source>
+                <target>Información de Localidad</target>
+            </trans-unit>
+            <trans-unit id="filter.label_keywords">
+                <source>filter.label_keywords</source>
+                <target>Keywords</target>
+            </trans-unit>
+            
+            
+            
+            
+            
+            
+
+
+        </body>
+    </file>
+</xliff>
