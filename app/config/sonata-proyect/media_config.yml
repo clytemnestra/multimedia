@@ -82,8 +82,8 @@ sonata_media:
 
     cdn:
         server:
-#             path: /uploads/media # http://media.sonata-project.org/
-           path: /multimedia/web/uploads/media
+            path: /uploads/media # http://media.sonata-project.org/
+           #path: /multimedia/web/uploads/media
 
     filesystem:
         local:
