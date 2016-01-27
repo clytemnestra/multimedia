@@ -8,6 +8,8 @@ parameters:
     sonata.media.provider.dailymotion.class: Application\Sonata\MediaBundle\Provider\DailyMotionProvider
     sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\YouTubeProvider
     sonata.media.provider.vimeo.class: Application\Sonata\MediaBundle\Provider\VimeoProvider
+    sonata.media.dependencyinjection.class: Application\Sonata\MediaBundle\DependencyInjection\SonataMediaExtension
+    sonata.media.provider.audio.class: Application\Sonata\MediaBundle\Provider\AudioProvider
 
 
 sonata_media:
@@ -34,6 +36,7 @@ sonata_media:
                 - sonata.media.provider.image
                 - sonata.media.provider.file
                 - sonata.media.provider.vimeo
+#                - sonata.media.provider.audio
 
             formats:
                 small: { width: 100 , quality: 70}

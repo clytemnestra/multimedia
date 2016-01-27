@@ -3,7 +3,11 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: sonata-proyect/media_config.yml}
-    - { resource: sonata-proyect/sonata_classification.yml}
+#    - { resource: sonata-proyect/sonata_classification.yml}
+    
+    # Sonata Feature Bundles
+    - { resource: sonata/sonata_admin.yml }
+    - { resource: sonata/sonata_classification.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
