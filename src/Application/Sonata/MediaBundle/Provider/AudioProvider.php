@@ -47,7 +47,7 @@ class AudioProvider extends FileProvider
         $formMapper->add('description');
         $formMapper->add('name');
         //$formMapper->add('duration', 'text', array("required" => true));
-        //$formMapper->add('quality');
+        //$formMapper->add('quality', 'text', array("required" => false));
         $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('binaryContent', 'file', array('required' => false));
@@ -61,19 +61,18 @@ class AudioProvider extends FileProvider
         }
         
         $metadata = array(
-            'title' => '',
-            'description' => '',
-            'author_name' => '',
-            'height' => '',
-            'width' => '',
-            'duration' => '',
-            'title' => '',
+            'title' => 'Titulo',
+            'description' => 'Descripcion',
+            'author_name' => 'yo',
+            'height' => '250',
+            'width' => '300',
+            'duration' => '60',
         );       
 
         return $metadata;
     }
     
-    /*public function prePersist(MediaInterface $media)
+    public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -82,25 +81,27 @@ class AudioProvider extends FileProvider
 
         // retrieve metadata
         $metadata = $this->getMetadata($media);
-
+        $metadata = array_merge($metadata, array('artista'=>'Esteban Novo'));
+        
         // store provider information
         $media->setProviderName($this->name);
         $media->setProviderReference($media->getBinaryContent());
         $media->setProviderMetadata($metadata);
 
         // update Media common field from metadata
-        $media->setName($metadata['title']);
+        $media->setName($media->getName());
         $media->setDescription($metadata['description']);
         $media->setAuthorName($metadata['author_name']);
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
         $media->setLength($metadata['duration']);
-        $media->setContentType('video/x-flv');
-        $media->setProviderStatus(Media::STATUS_OK);
+        //$media->setContentType('video/x-flv');
+        //$media->setProviderStatus(Media::STATUS_OK);
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
-    }*/
+    }
     
     public function preUpdate(MediaInterface $media)
     {
@@ -110,6 +111,7 @@ class AudioProvider extends FileProvider
         }
 
         $metadata = $this->getMetadata($media);
+        $metadata = array_merge($metadata, array('artista'=>'Esteban Novo'));
 
         $media->setProviderReference($media->getBinaryContent());
         $media->setProviderMetadata($metadata);
@@ -164,54 +166,19 @@ class AudioProvider extends FileProvider
             $media->setHeight(0);
         }
     }
-    /*
-    public function getHelperProperties(Media $media, $format, $options = array())
+    
+     /**
+     * {@inheritdoc}
+     */
+    public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        // documentation : http://vimeo.com/api/docs/moogaloop
-        $defaults = array(
-            // (optional) Flash Player version of app. Defaults to 9 .NEW!
-            // 10 - New Moogaloop. 9 - Old Moogaloop without newest features.
-            'fp_version'      => 10,
-
-            // (optional) Enable fullscreen capability. Defaults to true.
-            'fullscreen' => true,
-
-            // (optional) Show the byline on the video. Defaults to true.
-            'title' => true,
-
-            // (optional) Show the title on the video. Defaults to true.
-            'byline' => 0,
-
-            // (optional) Show the user's portrait on the video. Defaults to true.
-            'portrait' => true,
-
-            // (optional) Specify the color of the video controls.
-            'color' => null,
-
-            // (optional) Set to 1 to disable HD.
-            'hd_off' => 0,
-
-            // Set to 1 to enable the Javascript API.
-            'js_api' => null,
-
-            // (optional) JS function called when the player loads. Defaults to vimeo_player_loaded.
-            'js_onLoad' => 0,
-
-            // Unique id that is passed into all player events as the ending parameter.
-            'js_swf_id' => uniqid('vimeo_player_'),
-        );
-
-        $player_parameters =  array_merge($defaults, isset($options['player_parameters']) ? $options['player_parameters'] : array());
-
-        $params = array(
-            'src'         => http_build_query($player_parameters),
-            'id'          => $player_parameters['js_swf_id'],
-            'frameborder' => isset($options['frameborder']) ? $options['frameborder'] : 0,
-            'width'       => isset($options['width'])             ? $options['width']  : $media->getWidth(),
-            'height'      => isset($options['height'])            ? $options['height'] : $media->getHeight(),
-        );
-
-        return $params;
+        return array_merge(array(
+            'alt'      => $media->getName(),
+            'artista'      => 'Esteban Novo',
+            'title'    => $media->getName(),
+            'src'      => $this->generatePublicUrl($media, $format),
+            'width'    => 0,
+            'height'   => 0,
+        ), $options);
     }
-    */
 }

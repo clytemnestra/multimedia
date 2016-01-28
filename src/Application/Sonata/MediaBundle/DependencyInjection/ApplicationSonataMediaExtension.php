@@ -35,11 +35,6 @@ class ApplicationSonataMediaExtension extends Extension
         //parent::load($configs, $container);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('provider.xml');
-        /*echo "<pre>";
-        print_r($config);
-        echo "</pre>";
-        exit();*/
-        
         $this->configureProviders($container, $config);
     }
     
