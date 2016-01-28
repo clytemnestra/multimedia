@@ -12,23 +12,23 @@ parameters:
     sonata.media.provider.audio.class: Application\Sonata\MediaBundle\Provider\AudioProvider
 
 
-services:
-    sonata.media.provider.audio:
-        class: Application\Sonata\MediaBundle\Provider\AudioProvider
-        arguments:
-            - sonata.media.provider.image
-            - @sonata.media.filesystem.local
-            - @sonata.media.cdn.server
-            - @sonata.media.generator.default
-            - @sonata.media.thumbnail.format
-            - []
-            - []
-            - @sonata.media.adapter.image.gd
-            - @sonata.media.metadata.proxy
-        tags:
-            - { name: sonata.media.provider }
-        calls:
-            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: SonataMediaBundle:Provider:view_youtube.html.twig } ] ]
+#services:
+#    sonata.media.provider.audio:
+#        class: Application\Sonata\MediaBundle\Provider\AudioProvider
+#        arguments:
+#            - sonata.media.provider.audio
+#            - @sonata.media.filesystem.local
+#            - @sonata.media.cdn.server
+#            - @sonata.media.generator.default
+#            - @sonata.media.thumbnail.format
+#            - []
+#            - []
+#            - @sonata.media.adapter.image.gd
+#            - @sonata.media.metadata.proxy
+#        tags:
+#            - { name: sonata.media.provider }
+#        calls:
+#            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: SonataMediaBundle:Provider:view_youtube.html.twig } ] ]
 
 sonata_media:
     pixlr:
@@ -103,8 +103,8 @@ sonata_media:
 
     cdn:
         server:
-           # path: /uploads/media # http://media.sonata-project.org/
-            path: /multimedia/web/uploads/media
+            path: /uploads/media # http://media.sonata-project.org/
+            #path: /multimedia/web/uploads/media
 
     filesystem:
         local:
@@ -122,4 +122,7 @@ sonata_media:
             thumbnail:  sonata.media.thumbnail.format
             allowed_extensions: ['pdf', 'txt', 'rtf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx', 'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb', 'csv', 'xml', 'mp3']
             allowed_mime_types: ['application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain', 'audio/mpeg']
+#        audio:
+#            allowed_extensions: ['mp3']
+#            allowed_mime_types: ['audio/mpeg']
             

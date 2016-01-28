@@ -36,19 +36,6 @@ class AudioProvider extends FileProvider
     /**
      * {@inheritdoc}
      */
-    public function buildCreateForm(FormMapper $formMapper)
-    {
-        $formMapper->add('binaryContent', 'file', array(
-            'constraints' => array(
-                new NotBlank(),
-                new NotNull(),
-            ),
-        ));
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
     public function buildEditForm(FormMapper $formMapper)
     {
         $formMapper->add('title', 'text', array("required" => true));

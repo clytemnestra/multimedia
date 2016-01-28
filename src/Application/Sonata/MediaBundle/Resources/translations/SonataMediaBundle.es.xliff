@@ -39,6 +39,10 @@
                 <source>filter.label_keywords</source>
                 <target>Keywords</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.audio">
+                <source>sonata.media.provider.audio</source>
+                <target>Audio</target>
+            </trans-unit>
             
             
             
