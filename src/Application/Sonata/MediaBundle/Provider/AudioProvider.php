@@ -152,6 +152,32 @@ class AudioProvider extends FileProvider
     {
         return $media->getMetadataValue('thumbnail_url');
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function updateMetadata(MediaInterface $media, $force = true)
+    {
+        try {
+            // this is now optimized at all!!!
+            $path       = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
+            $fileObject = new \SplFileObject($path, 'w');
+            $fileObject->fwrite($this->getReferenceFile($media)->getContent());
+
+            $image = $this->imagineAdapter->open($fileObject->getPathname());
+            $size  = $image->getSize();
+
+            $media->setSize($fileObject->getSize());
+            $media->setWidth($size->getWidth());
+            $media->setHeight($size->getHeight());
+        } catch (\LogicException $e) {
+            $media->setProviderStatus(MediaInterface::STATUS_ERROR);
+
+            $media->setSize(0);
+            $media->setWidth(0);
+            $media->setHeight(0);
+        }
+    }
     /*
     public function getHelperProperties(Media $media, $format, $options = array())
     {
