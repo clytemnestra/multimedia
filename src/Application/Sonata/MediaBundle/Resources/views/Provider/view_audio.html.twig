@@ -8,12 +8,29 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-<iframe
-    src="/{{ options.title }}"
-    width="700"
-    height="393">
-</iframe>
+<script src="http://jwpsrv.com/library/zdGDrr47EeKT4iIACqoQEQ.js"></script>
+<div id='AudioPlayer'></div>
+<script type='text/javascript'>
+    var JwPAudio_0 = jwplayer('AudioPlayer').setup({
+        file: '{{options.src}}',
+	events:{
+            onError: function(obj){
+	    },
+	    onSetupError: function(obj){
+            }
+        },
+	width: '100%',
+	type: 'mp3',
+        height: '32',
+        fallback: 'false',
+        autostart: 'false',
+        ga: '{}', 
+        //sharing: '{}',
+	/*advertising: {
+            client: 'vast',
+            //tag: 'http://deliveryengine.audioad.adswizz.com/www/delivery/swfIndex.php?zoneId=205&companionZones=206&protocolVersion=2.0&reqType=AdsSetup'
+	}*/
+    });	
+	</script>
 
 {{dump(options)}}
-
-<img {% for name, value in options %}{{ name }}="{{ value }}" {% endfor %} />

@@ -103,8 +103,8 @@ sonata_media:
 
     cdn:
         server:
-            #path: /uploads/media # http://media.sonata-project.org/
-            path: /multimedia/web/uploads/media
+            path: /uploads/media # http://media.sonata-project.org/
+            #path: /multimedia/web/uploads/media
 
     filesystem:
         local:
@@ -123,6 +123,10 @@ sonata_media:
             allowed_extensions: ['pdf', 'txt', 'rtf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pttx', 'odt', 'odg', 'odp', 'ods', 'odc', 'odf', 'odb', 'csv', 'xml', 'mp3']
             allowed_mime_types: ['application/pdf', 'application/x-pdf', 'application/rtf', 'text/html', 'text/rtf', 'text/plain', 'audio/mpeg']
 #        audio:
-#            allowed_extensions: ['mp3']
+#            allowed_extensions: ['mp3', 'acc', 'vorbis', 'opus']
+#            allowed_mime_types: ['audio/mpeg']
+
+#        video:
+#            allowed_extensions: ['VP8', 'H.264', 'VP9']
 #            allowed_mime_types: ['audio/mpeg']
             

@@ -51,8 +51,14 @@ file that was distributed with this source code.
                             <table class="table">
                                 <tr>
                                     <th>{{ 'label.size'|trans({}, 'SonataMediaBundle') }}</th>
-                                    <td>{{ object.width|number_format_decimal }}px x {{ object.height|number_format_decimal }}px
-                                        {% if object.size > 0 %}({{ (object.size/1024/1024)|number_format_decimal }} MBs){% endif %}</td>
+                                    <td>
+                                        {% if object.providerName != 'sonata.media.provider.audio'%}
+                                            {{ object.width|number_format_decimal }}px x {{ object.height|number_format_decimal }}px
+                                            {% if object.size > 0 %}({{ (object.size/1024/1024)|number_format_decimal }} MBs){% endif %}
+                                        {% else %}
+                                            {% if object.size > 0 %}{{ (object.size/1024/1024)|number_format_decimal }} MBs{% endif %}
+                                        {% endif %}
+                                    </td>
                                 <tr>
                                 <tr>
                                     <th>{{ 'label.content_type'|trans({}, 'SonataMediaBundle') }}</th>

@@ -9,6 +9,8 @@ use Sonata\MediaBundle\Generator\GeneratorInterface;
 use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+//use GetId3\GetId3Core as GetId3;
+use \vendor\phansys\GetId3\GetId3Core as GetId3;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Form;
@@ -59,6 +61,7 @@ class AudioProvider extends FileProvider
 
         //     return;
         // }
+
         
         $metadata = array(
             'title' => 'Titulo',
@@ -66,7 +69,7 @@ class AudioProvider extends FileProvider
             'author_name' => 'yo',
             'height' => '250',
             'width' => '300',
-            'duration' => '60',
+            'duration' => '60'
         );       
 
         return $metadata;
@@ -85,7 +88,8 @@ class AudioProvider extends FileProvider
         
         // store provider information
         $media->setProviderName($this->name);
-        $media->setProviderReference($media->getBinaryContent());
+        //$media->setProviderReference($media->getBinaryContent());
+        //$media->setProviderReference($this->generateReferenceName($media));
         $media->setProviderMetadata($metadata);
 
         // update Media common field from metadata
@@ -113,7 +117,8 @@ class AudioProvider extends FileProvider
         $metadata = $this->getMetadata($media);
         $metadata = array_merge($metadata, array('artista'=>'Esteban Novo'));
 
-        $media->setProviderReference($media->getBinaryContent());
+        //$media->setProviderReference($media->getBinaryContent());
+        //$media->setProviderReference($media->getPreviousProviderReference());
         $media->setProviderMetadata($metadata);
         $media->setHeight($metadata['height']);
         $media->setWidth($metadata['width']);
@@ -134,11 +139,6 @@ class AudioProvider extends FileProvider
         $this->setFileContents($media);
 
         $this->generateThumbnails($media);
-    }
-    
-    public function getReferenceImage(MediaInterface $media)
-    {
-        return $media->getMetadataValue('thumbnail_url');
     }
     
     /**
@@ -172,13 +172,45 @@ class AudioProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
+        $mp3File = $this->generatePublicUrl($media, $format);
+        $getId3 = new GetId3();
+        $audio = $getId3
+            ->setOptionMD5Data(true)
+            ->setOptionMD5DataSource(true)
+            ->setEncoding('UTF-8')
+            ->analyze($mp3File)
+        ;
+
+        if (isset($audio['error'])) {
+            throw new \RuntimeException(sprintf('Error at reading audio properties from "%s" with GetId3: %s.', $mp3File, $audio['error']));
+        }
+        //$this->setLength(isset($audio['playtime_seconds']) ? $audio['playtime_seconds'] : '');
+        
         return array_merge(array(
-            'alt'      => $media->getName(),
-            'artista'      => 'Esteban Novo',
-            'title'    => $media->getName(),
+            'title'      => $media->getName(),
+            'description'      => '',
+            'album'      => 'Pedro',
             'src'      => $this->generatePublicUrl($media, $format),
-            'width'    => 0,
-            'height'   => 0,
+            'type'      => '',
+            'duration'      => '',
+            'image_src'      => '',
+            'image'      => $media,
+            'format'      => $format,
+            'audio' => $audio,
         ), $options);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function generatePublicUrl(MediaInterface $media, $format)
+    {
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+        }
+
+        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 }
