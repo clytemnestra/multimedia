@@ -22,8 +22,8 @@
             
             <call method="setTemplates">
                 <argument type="collection">
-                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
-                    <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
+                    <argument key='helper_thumbnail'>ApplicationSonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>ApplicationSonataMediaBundle:Provider:view_audio.html.twig</argument>
                 </argument>
             </call>
         </service>

@@ -46,8 +46,8 @@ class AudioProvider extends FileProvider
         $formMapper->add('copyright');
         $formMapper->add('description');
         $formMapper->add('name');
-        $formMapper->add('duration', 'text', array("required" => true));
-        $formMapper->add('quality');
+        //$formMapper->add('duration', 'text', array("required" => true));
+        //$formMapper->add('quality');
         $formMapper->add('enabled', null, array('required' => false));
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('binaryContent', 'file', array('required' => false));
@@ -73,7 +73,7 @@ class AudioProvider extends FileProvider
         return $metadata;
     }
     
-    public function prePersist(MediaInterface $media)
+    /*public function prePersist(MediaInterface $media)
     {
         if (!$media->getBinaryContent()) {
 
@@ -100,7 +100,7 @@ class AudioProvider extends FileProvider
 
         $media->setCreatedAt(new \Datetime());
         $media->setUpdatedAt(new \Datetime());
-    }
+    }*/
     
     public function preUpdate(MediaInterface $media)
     {
@@ -119,18 +119,17 @@ class AudioProvider extends FileProvider
 
         $media->setUpdatedAt(new \Datetime());
     }
-    
-    public function postUpdate(MediaInterface $media)
-    {
-        $this->postPersist($media);
-    }
 
+    /**
+     * {@inheritdoc}
+     */
     public function postPersist(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
-
+        if ($media->getBinaryContent() === null) {
             return;
         }
+
+        $this->setFileContents($media);
 
         $this->generateThumbnails($media);
     }

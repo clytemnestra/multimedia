@@ -14,7 +14,7 @@ class MediaAdmin extends BaseMediaAdmin {
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('keywords')
+            ->addIdentifier('keywords')
             ->add('description')
             ->add('enabled')
             ->add('size')
