@@ -8,11 +8,14 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
+<img src="data:{{options.image_mime}};base64,{{options.image_src}}">
+
 <script src="http://jwpsrv.com/library/zdGDrr47EeKT4iIACqoQEQ.js"></script>
 <div id='AudioPlayer'></div>
 <script type='text/javascript'>
     var JwPAudio_0 = jwplayer('AudioPlayer').setup({
         file: '{{options.src}}',
+        //duration: '{{options.playtime_seconds}}',
 	events:{
             onError: function(obj){
 	    },
@@ -33,4 +36,4 @@ file that was distributed with this source code.
     });	
 	</script>
 
-{{dump(options)}}
+{#{dump(options)}#}

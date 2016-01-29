@@ -19,6 +19,7 @@
             <argument />
             <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument type="service" id="sonata.media.metadata.proxy" />
+            <argument>%kernel.root_dir%</argument>
             
             <call method="setTemplates">
                 <argument type="collection">
