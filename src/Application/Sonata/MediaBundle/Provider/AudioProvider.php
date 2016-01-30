@@ -55,10 +55,10 @@ class AudioProvider extends FileProvider
     
     public function getMetadata(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        // if (!$media->getBinaryContent()) {
 
-            return;
-        }
+        //     return;
+        // }
         
         $metadata = array(
             'title' => 'Titulo',
@@ -74,10 +74,10 @@ class AudioProvider extends FileProvider
     
     public function prePersist(MediaInterface $media)
     {
-        if (!$media->getBinaryContent()) {
+        // if (!$media->getBinaryContent()) {
 
-            return;
-        }
+        //     return;
+        // }
 
         // retrieve metadata
         $metadata = $this->getMetadata($media);
