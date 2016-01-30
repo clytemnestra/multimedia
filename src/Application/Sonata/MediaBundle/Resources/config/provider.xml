@@ -4,6 +4,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">    
     <parameters>        
         <parameter key="sonata.media.provider.audio.class">Application\Sonata\MediaBundle\Provider\AudioProvider</parameter>
+        <parameter key="sonata.media.provider.image.class">Sonata\MediaBundle\Provider\ImageProvider</parameter>
     </parameters>
     <services>
         <service id="sonata.media.provider.audio" class="%sonata.media.provider.audio.class%">
@@ -22,6 +23,26 @@
                 <argument type="collection">
                     <argument key='helper_thumbnail'>ApplicationSonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>ApplicationSonataMediaBundle:Provider:view_audio.html.twig</argument>
+                </argument>
+            </call>
+        </service>
+        
+        <service id="sonata.media.provider.image" class="%sonata.media.provider.image.class%">
+            <tag name="sonata.media.provider" />
+            <argument>sonata.media.provider.image</argument>
+            <argument type="service" id="sonata.media.filesystem.local" />
+            <argument type="service" id="sonata.media.cdn.server" />
+            <argument type="service" id="sonata.media.generator.default" />
+            <argument type="service" id="sonata.media.thumbnail.format" />
+            <argument />
+            <argument />
+            <argument type="service" id="sonata.media.adapter.image.gd" />
+            <argument type="service" id="sonata.media.metadata.proxy" />
+
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
+                    <argument key='helper_view'>SonataMediaBundle:Provider:view_image.html.twig</argument>
                 </argument>
             </call>
         </service>

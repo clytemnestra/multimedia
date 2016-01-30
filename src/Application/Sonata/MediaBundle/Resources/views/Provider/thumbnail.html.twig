@@ -11,12 +11,4 @@ file that was distributed with this source code.
 
 {#{dump(options)}#}
 
-{% if options.src.image is defined and options.src.image != ''%}
-    <img src="data:{{options.src.image}};base64,{{options.src.image}}" width="{{options.width}}">
-{% else %}
-    {% if options.src.format is defined and options.src.format != ''%}
-        <img src="/uploads/media/sonatamedia/files/admin/{{options.src.format}}.png" width="{{options.width}}">
-    {% else %}
-        <img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />
-    {% endif %}
-{% endif %}
+<img {% for name, value in options %}{{name}}="{{value}}" {% endfor %} />

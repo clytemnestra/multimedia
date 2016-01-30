@@ -342,59 +342,50 @@ class AudioProvider extends FileProvider
      */
     public function getHelperProperties(MediaInterface $media, $format, $options = array())
     {
-        $getId3 = new GetId3();
+        /*$getId3 = new GetId3();
         $audio = $getId3
             ->setOptionMD5Data(true)
             ->setOptionMD5DataSource(true)
             ->setEncoding('UTF-8')
             ->analyze($this->root_dir . '/../web' .$this->generatePublicUrl($media, $format))
-        ;
-
-        /*if (isset($audio['error'])) {
-            throw new \RuntimeException(sprintf('Error at reading audio properties from "%s" with GetId3: %s.', $this->root_dir . '/../web' .$this->generatePublicUrl($media, $format), $audio['error']));
-        }*/
-        //$this->setLength(isset($audio['playtime_seconds']) ? $audio['playtime_seconds'] : '');
+        ;*/
         
-        //$audio['comments']['picture'][0]['data'] = base64_encode($audio['comments']['picture'][0]['data']);
-        //unset($audio['comments']['picture'][0]['data']);
-        //unset($audio['id3v2']['APIC'][0]['data']);
-        //print_r($getId3->GetFileFormatArray());
-        //print_r($getId3->getInfo());
         
         return array_merge(array(
-            'name'      => $media->getName(),
-            'src'      => $this->generatePublicUrl($media, 'reference'),
-            'image_src'      => $this->getMetadataImage($audio),
-            'image_mime'      => $this->getMetadataImageMimeTypes($audio),
-            'encoding'     => $audio['encoding'],
-            'filesize'     => $audio['filesize'],            
-            'mime_type'     => $audio['mime_type'],
-            'fileformat'     => $audio['fileformat'],
-            'dataformat'      => $audio['audio']['dataformat'],
-            'channels'      => $audio['audio']['channels'],
-            'sample_rate'      => $audio['audio']['sample_rate'],
-            'bitrate'      => $audio['audio']['bitrate'],
-            'channelmode'      => $audio['audio']['channelmode'],
-            'bitrate_mode'      => $audio['audio']['bitrate_mode'],
-            'title'      => $this->getMetadataTitle($audio),
-            'comment'      => $this->getMetadataComment($audio),
-            'artist'      => $this->getMetadataArtist($audio),
-            'album'      => $this->getMetadataAlbum($audio),
-            'year'      => $this->getMetadataAlbumYear($audio),
-            'track_number'      => $this->getMetadataTrackNumber($audio),
-            'genre'      => $this->getMetadataGenre($audio),            
-            'playtime_seconds'      => $audio['playtime_seconds'],
-            'playtime_string'      => $audio['playtime_string'],
-            //'image'      => $media,
-            //'format'      => $format,
-            //'audio' => $audio,
+            'name' => $media->getName(),
+            'src' => $this->generatePublicMultimediaUrl($media),
+            'image_src' => $media->getMetadataValue('image_src'),
+            'image_mime' => $media->getMetadataValue('image_mime'),
+            'encoding' => $media->getMetadataValue('encoding'),
+            'filesize' => $media->getMetadataValue('filesize'),
+            'mime_type' => $media->getMetadataValue('mime_type'),
+            'fileformat' => $media->getMetadataValue('fileformat'),
+            'dataformat' => $media->getMetadataValue('dataformat'),
+            'channels' => $media->getMetadataValue('channels'),
+            'sample_rate' => $media->getMetadataValue('sample_rate'),
+            'bitrate' => $media->getMetadataValue('bitrate'),
+            'channelmode' => $media->getMetadataValue('channelmode'),
+            'bitrate_mode' => $media->getMetadataValue('bitrate_mode'),
+            'title' => $media->getMetadataValue('title'),
+            'comment' => $media->getMetadataValue('comment'),
+            'artist' => $media->getMetadataValue('artist'),
+            'album' => $media->getMetadataValue('album'),
+            'year' => $media->getMetadataValue('year'),
+            'track_number' => $media->getMetadataValue('track_number'),
+            'genre' => $media->getMetadataValue('genre'),
+            'playtime_seconds' => $media->getMetadataValue('playtime_seconds'),
+            'playtime_string' => $media->getMetadataValue('playtime_string'),
         ), $options);
+    }
+    
+    public function generatePublicMultimediaUrl(MediaInterface $media){
+        return $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
     }
     
     /**
      * {@inheritdoc}
      */
-    public function generatePublicUrl(MediaInterface $media, $format)
+    /*public function generatePublicUrl(MediaInterface $media, $format)
     {
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
@@ -404,18 +395,34 @@ class AudioProvider extends FileProvider
                 'mime_type' =>$media->getMetadataValue('mime_type'),
                 'format' =>$media->getMetadataValue('fileformat')
             );
-            /*if(isset($arr_metadata['format'])){
+            if(isset($arr_metadata['format'])){
                 $path = $arr_metadata;
-            }else{*/
+            }else{
                 $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
-            //}
-            
+            }
             //$path = $this->getMetadataImage($metadata);
+            
+            //$path = $this->thumbnail->generatePublicUrl($this, $media, $format);
         }
-        //return $path;
-        //return $media['providerMetadata']['image_src'];
+        
+        return $path;
         //return $media->getMetadataValue('image_src');
         //return $media;
+        //return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+    }*/
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function generatePublicUrl(MediaInterface $media, $format)
+    {
+        if ($format == 'reference') {
+            $path = $this->getReferenceImage($media);
+        } else {
+            // @todo: fix the asset path
+            $path = sprintf('sonatamedia/files/%s/%s.png', $format, $media->getMetadataValue('fileformat'));
+        }
+
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 }
