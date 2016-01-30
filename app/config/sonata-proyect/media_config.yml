@@ -10,6 +10,7 @@ parameters:
     sonata.media.provider.vimeo.class: Application\Sonata\MediaBundle\Provider\VimeoProvider
     sonata.media.dependencyinjection.class: Application\Sonata\MediaBundle\DependencyInjection\SonataMediaExtension
     sonata.media.provider.audio.class: Application\Sonata\MediaBundle\Provider\AudioProvider
+    sonata.media.provider.video.class: Application\Sonata\MediaBundle\Provider\VideoProvider
 
 
 #services:
@@ -29,6 +30,24 @@ parameters:
 #            - { name: sonata.media.provider }
 #        calls:
 #            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: SonataMediaBundle:Provider:view_youtube.html.twig } ] ]
+
+services:
+    sonata.media.provider.image:
+        class: Sonata\MediaBundle\Provider\ImageProvider
+        arguments:
+            - sonata.media.provider.image
+            - @sonata.media.filesystem.local
+            - @sonata.media.cdn.server
+            - @sonata.media.generator.default
+            - @sonata.media.thumbnail.format
+            - []
+            - []
+            - @sonata.media.adapter.image.gd
+            - @sonata.media.metadata.proxy
+        tags:
+            - { name: sonata.media.provider }
+        calls:
+            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: SonataMediaBundle:Provider:view_image.html.twig } ] ]
 
 sonata_media:
     pixlr:
@@ -55,6 +74,7 @@ sonata_media:
                 - sonata.media.provider.file
                 - sonata.media.provider.vimeo
                 - sonata.media.provider.audio
+                - sonata.media.provider.video
 
             formats:
                 small: { width: 100 , quality: 70}

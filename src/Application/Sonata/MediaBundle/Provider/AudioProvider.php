@@ -378,6 +378,16 @@ class AudioProvider extends FileProvider
         ), $options);
     }
     
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        //$path = 'sonatamedia/files/admin/volume-24-20.png';
+        //return new Metadata($this->getName(), $this->getName().'.description', $this->getCdn()->getPath($path, false), 'SonataMediaBundle', array('class' => 'fa fa-file-text-o'));
+        return new Metadata($this->getName(), $this->getName().'.description', false, 'SonataMediaBundle', array('class' => 'glyphicon glyphicon-music'));
+    }
+    
     public function generatePublicMultimediaUrl(MediaInterface $media){
         return $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
     }

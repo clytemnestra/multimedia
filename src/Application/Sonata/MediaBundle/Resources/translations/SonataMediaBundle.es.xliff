@@ -43,14 +43,40 @@
                 <source>sonata.media.provider.audio</source>
                 <target>Audio</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.video">
+                <source>sonata.media.provider.video</source>
+                <target>Video</target>
+            </trans-unit>
             
-            
-            
-            
-            
-            
-
-
+            <!-- Traducciones para la lista de selector de provider, descripción de c/provider-->
+            <trans-unit id="sonata.media.provider.dailymotion.description">
+                <source>sonata.media.provider.dailymotion.description</source>
+                <target>Alta de videos de Dailymotion</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.youtube.description">
+                <source>sonata.media.provider.youtube.description</source>
+                <target>Alta de videos de YouTube</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.image.description">
+                <source>sonata.media.provider.image.description</source>
+                <target>Administración de imágenes</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.file.description">
+                <source>sonata.media.provider.file.description</source>
+                <target>Administración de Archivos, centraliza todos los tipos de archivos que no pueden ser contenidos en el resto de los providers</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.vimeo.description">
+                <source>sonata.media.provider.vimeo.description</source>
+                <target>Alta de videos de Vimeo</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.audio.description">
+                <source>sonata.media.provider.audio.description</source>
+                <target>Administración de arcivos de audio y música, grabaciones, etc.</target>
+            </trans-unit>
+            <trans-unit id="sonata.media.provider.video.description">
+                <source>sonata.media.provider.video.description</source>
+                <target>Administración de videos</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

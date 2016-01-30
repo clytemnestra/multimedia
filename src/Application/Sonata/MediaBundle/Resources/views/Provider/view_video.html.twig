@@ -1,0 +1,44 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{#{dump(options)}#}
+<script src="http://jwpsrv.com/library/zdGDrr47EeKT4iIACqoQEQ.js"></script>
+<div id='VideoPlayer'></div>
+<script type='text/javascript'>
+    var JwPAudio_0 = jwplayer('VideoPlayer').setup({
+        file: '{{options.src}}',
+        image: '',
+        //duration: '{{options.playtime_seconds}}',
+	events:{
+            onError: function(obj){
+	    },
+	    onSetupError: function(obj){
+            }
+        },
+        cast:{
+            appid:'FA70C993',
+            loadscreen:'/img.png',
+            endscreen:'/img.png',
+            logo:'logo.png',
+            railcolor:'#e31e76'
+        },
+	width: '100%',
+        aspectratio: '16:9',
+        autostart: false,
+        primary: 'html5',
+        androidhls: 'true',
+        fallback: 'false',
+        startparam: 'start',
+        ga: '{}', 
+        sharing: {}
+    });	
+</script>
+

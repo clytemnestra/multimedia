@@ -35,13 +35,6 @@ abstract class MultimediaBaseProvider extends FileProvider
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
         $this->imagineAdapter = $adapter;
         $this->root_dir = $root_dir;
-        
-        /*echo "<pre>";
-        print_r($allowedExtensions);
-        print_r($allowedMimeTypes);
-        
-        echo "</pre>";
-        exit();*/
     }
     
     /**
@@ -381,35 +374,6 @@ abstract class MultimediaBaseProvider extends FileProvider
     public function generatePublicMultimediaUrl(MediaInterface $media){
         return $this->getCdn()->getPath($this->getReferenceImage($media), $media->getCdnIsFlushable());
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    /*public function generatePublicUrl(MediaInterface $media, $format)
-    {
-        if ($format == 'reference') {
-            $path = $this->getReferenceImage($media);
-        } else {            
-            $arr_metadata = array(
-                'image' =>$media->getMetadataValue('image_src'),
-                'mime_type' =>$media->getMetadataValue('mime_type'),
-                'format' =>$media->getMetadataValue('fileformat')
-            );
-            if(isset($arr_metadata['format'])){
-                $path = $arr_metadata;
-            }else{
-                $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
-            }
-            //$path = $this->getMetadataImage($metadata);
-            
-            //$path = $this->thumbnail->generatePublicUrl($this, $media, $format);
-        }
-        
-        return $path;
-        //return $media->getMetadataValue('image_src');
-        //return $media;
-        //return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
-    }*/
     
     /**
      * {@inheritdoc}

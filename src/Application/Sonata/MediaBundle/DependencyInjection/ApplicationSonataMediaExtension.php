@@ -50,6 +50,12 @@ class ApplicationSonataMediaExtension extends Extension
             ->replaceArgument(7, new Reference($config['providers']['audio']['adapter']))
         ;
         
+        $container->getDefinition('sonata.media.provider.video')
+            ->replaceArgument(5, array_map('strtolower', $config['providers']['video']['allowed_extensions']))
+            ->replaceArgument(6, $config['providers']['video']['allowed_mime_types'])
+            ->replaceArgument(7, new Reference($config['providers']['video']['adapter']))
+        ;
+        
         $container->getDefinition('sonata.media.provider.image')
             ->replaceArgument(5, array_map('strtolower', $config['providers']['image']['allowed_extensions']))
             ->replaceArgument(6, $config['providers']['image']['allowed_mime_types'])
