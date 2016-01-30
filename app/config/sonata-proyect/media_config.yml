@@ -11,9 +11,11 @@ parameters:
     sonata.media.dependencyinjection.class: Application\Sonata\MediaBundle\DependencyInjection\SonataMediaExtension
     sonata.media.provider.audio.class: Application\Sonata\MediaBundle\Provider\AudioProvider
     sonata.media.provider.video.class: Application\Sonata\MediaBundle\Provider\VideoProvider
+    
 
 
-#services:
+
+# services:
 #    sonata.media.provider.audio:
 #        class: Application\Sonata\MediaBundle\Provider\AudioProvider
 #        arguments:
