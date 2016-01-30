@@ -35,6 +35,13 @@ class AudioProvider extends FileProvider
         parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, $allowedExtensions, $allowedMimeTypes, $metadata);
         $this->imagineAdapter = $adapter;
         $this->root_dir = $root_dir;
+        
+        /*echo "<pre>";
+        print_r($allowedExtensions);
+        print_r($allowedMimeTypes);
+        
+        echo "</pre>";
+        exit();*/
     }
     
     /**
@@ -73,32 +80,173 @@ class AudioProvider extends FileProvider
             ->analyze($media->getBinaryContent()->getPathname())
         ;
         
+        /*echo "<pre>";
+        print_r($audio);
+        echo "</pre>";
+        exit();*/
         $metadata = array(
             //'src'      => $this->generatePublicUrl($media, $format),
-            'image_src' => base64_encode($audio['comments']['picture'][0]['data']),
-            'image_mime' => $audio['comments']['picture'][0]['image_mime'],
+            'image_src' => $this->getMetadataImage($audio),
+            'image_mime' => $this->getMetadataImageMimeTypes($audio),
+            
             'encoding' => $audio['encoding'],
             'filesize' => $audio['filesize'],            
             'mime_type' => $audio['mime_type'],
             'fileformat' => $audio['fileformat'],
+            'playtime_seconds' => $audio['playtime_seconds'],
+            'playtime_string' => $audio['playtime_string'],
+            
             'dataformat' => $audio['audio']['dataformat'],
             'channels' => $audio['audio']['channels'],
             'sample_rate' => $audio['audio']['sample_rate'],
             'bitrate' => $audio['audio']['bitrate'],
             'channelmode '=> $audio['audio']['channelmode'],
             'bitrate_mode' => $audio['audio']['bitrate_mode'],
-            'title' => $audio['tags_html']['id3v2']['title'][0],
-            'comment' => $audio['tags_html']['id3v2']['comment'][0],            
-            'artist' => $audio['tags_html']['id3v2']['artist'][0],
-            'album' => $audio['tags_html']['id3v2']['album'][0],
-            'year' => $audio['tags_html']['id3v2']['year'][0],
-            'track_number' => $audio['tags_html']['id3v2']['track_number'][0],
-            'genre' => $audio['tags_html']['id3v2']['genre'][0],            
-            'playtime_seconds' => $audio['playtime_seconds'],
-            'playtime_string' => $audio['playtime_string'],
+            
+            
+            'title' => $this->getMetadataTitle($audio),
+            'comment' => $this->getMetadataComment($audio),
+            'artist' => $this->getMetadataArtist($audio),
+            'album' => $this->getMetadataAlbum($audio),
+            'year' => $this->getMetadataAlbumYear($audio),
+            'track_number' => $this->getMetadataTrackNumber($audio),
+            'genre' => $this->getMetadataGenre($audio),
+            
         );       
 
         return $metadata;
+    }
+    
+    private function getMetadataGenre($metadata){
+        if(isset($metadata['tags_html']['id3v1']['genre'][0])){
+            return $metadata['tags_html']['id3v1']['genre'][0];
+        }else{
+            if(isset($metadata['tags_html']['id3v2']['genre'][0])){
+                return $metadata['tags_html']['id3v2']['genre'][0];
+            }else{
+                return '';
+            }
+        }
+    }
+    
+    private function getMetadataArtist($metadata){
+        if(isset($metadata['tags_html']['id3v2']['artist'][0])){
+            return $metadata['tags_html']['id3v2']['artist'][0];
+        }else{
+            if(isset($metadata['id3v1']['artist'])){
+                return $metadata['id3v1']['artist'];
+            }else{
+                if(isset($metadata['id3v2']['artist'])){
+                    return $metadata['id3v2']['artist'];
+                }else{
+                    return '';
+                }
+            }
+        }
+    }
+    
+    private function getMetadataAlbum($metadata){
+        if(isset($metadata['tags_html']['id3v2']['album'][0])){
+            return $metadata['tags_html']['id3v2']['album'][0];
+        }else{
+            if(isset($metadata['id3v1']['album'])){
+                return $metadata['id3v1']['album'];
+            }else{
+                if(isset($metadata['id3v2']['album'])){
+                    return $metadata['id3v2']['album'];
+                }else{
+                    return '';
+                }
+            }
+        }
+    }
+    
+    private function getMetadataAlbumYear($metadata){
+        if(isset($metadata['tags_html']['id3v2']['year'][0])){
+            return $metadata['tags_html']['id3v2']['year'][0];
+        }else{
+            if(isset($metadata['id3v1']['year'])){
+                return $metadata['id3v1']['year'];
+            }else{
+                if(isset($metadata['id3v2']['year'])){
+                    return $metadata['id3v2']['year'];
+                }else{
+                    return '';
+                }
+            }
+        }
+    }
+    
+    private function getMetadataTrackNumber($metadata){
+        if(isset($metadata['tags_html']['id3v2']['track_number'][0])){
+            return $metadata['tags_html']['id3v2']['track_number'][0];
+        }else{
+            return 0;
+        }
+    }
+    
+    private function getMetadataImage($metadata){
+        if(isset($metadata['comments']['picture'][0]['data'])){
+            return base64_encode($metadata['comments']['picture'][0]['data']);
+        }else{
+           if(isset($metadata['id3v2']['APIC'][0]['data'])){
+               return base64_encode($metadata['id3v2']['APIC'][0]['data']);
+           }else{
+               return "";
+           }
+        }
+    }
+    
+    private function getMetadataImageMimeTypes($metadata){
+        if(isset($metadata['comments']['picture'][0]['image_mime'])){
+            return base64_encode($metadata['comments']['picture'][0]['image_mime']);
+        }else{
+           if(isset($metadata['id3v2']['APIC'][0]['image_mime'])){
+               return base64_encode($metadata['id3v2']['APIC'][0]['image_mime']);
+           }else{
+               return "";
+           }
+        }
+    }
+    
+    private function getMetadataTitle($metadata){
+        if(isset($metadata['tags_html']['id3v2']['title'][0])){
+            return $metadata['tags_html']['id3v2']['title'][0];
+        }else{
+            if(isset($metadata['tags_html']['id3v1']['title'][0])){
+                return $metadata['tags_html']['id3v1']['title'][0];
+            }else{
+                if(isset($metadata['id3v1']['title'])){
+                    return $metadata['id3v1']['title'];
+                }else{
+                    if(isset($metadata['id3v2']['comments']['title'][0])){
+                        return $metadata['id3v2']['comments']['title'][0];
+                    }else{
+                        if(isset($metadata['tags']['id3v1']['title'][0])){
+                            return $metadata['tags']['id3v1']['title'][0];
+                        }else{
+                            if(isset($metadata['tags']['id3v2']['title'][0])){
+                                return $metadata['tags']['id3v2']['title'][0];
+                            }else{
+                                return '';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private function getMetadataComment($metadata){
+        if(isset($metadata['tags_html']['id3v2']['comment'][0])){
+            return $metadata['tags_html']['id3v2']['comment'][0];
+        }else{
+            if(isset($metadata['id3v1']['comment'])){
+                return $metadata['id3v1']['comment'];
+            }else{
+                return '';
+            }
+        }
     }
     
     public function prePersist(MediaInterface $media)
@@ -115,8 +263,10 @@ class AudioProvider extends FileProvider
         // update Media common field from metadata
         $media->setName($media->getName());
         $media->setTitle($metadata['title']);
+        $media->setSubTitle($metadata['album']);
         $media->setDescription($metadata['comment']);
         $media->setAuthorName($metadata['artist']);
+        $media->setKeywords("$metadata[artist], $metadata[album], $metadata[title]");
         $media->setHeight(0);
         $media->setWidth(0);
         $media->setLength($metadata['playtime_seconds']);
@@ -136,7 +286,6 @@ class AudioProvider extends FileProvider
         }
 
         $metadata = $this->getMetadata($media);
-        $metadata = array_merge($metadata, array('artista'=>'Esteban Novo'));
 
         //$media->setProviderReference($media->getBinaryContent());
         //$media->setProviderReference($media->getPreviousProviderReference());
@@ -211,11 +360,12 @@ class AudioProvider extends FileProvider
         //unset($audio['id3v2']['APIC'][0]['data']);
         //print_r($getId3->GetFileFormatArray());
         //print_r($getId3->getInfo());
+        
         return array_merge(array(
             'name'      => $media->getName(),
-            'src'      => $this->generatePublicUrl($media, $format),
-            'image_src'      => base64_encode($audio['comments']['picture'][0]['data']),
-            'image_mime'      => $audio['comments']['picture'][0]['image_mime'],
+            'src'      => $this->generatePublicUrl($media, 'reference'),
+            'image_src'      => $this->getMetadataImage($audio),
+            'image_mime'      => $this->getMetadataImageMimeTypes($audio),
             'encoding'     => $audio['encoding'],
             'filesize'     => $audio['filesize'],            
             'mime_type'     => $audio['mime_type'],
@@ -226,13 +376,13 @@ class AudioProvider extends FileProvider
             'bitrate'      => $audio['audio']['bitrate'],
             'channelmode'      => $audio['audio']['channelmode'],
             'bitrate_mode'      => $audio['audio']['bitrate_mode'],
-            'title'      => $audio['tags_html']['id3v2']['title'][0],
-            'comment'      => $audio['tags_html']['id3v2']['comment'][0],            
-            'artist'      => $audio['tags_html']['id3v2']['artist'][0],
-            'album'      => $audio['tags_html']['id3v2']['album'][0],
-            'year'      => $audio['tags_html']['id3v2']['year'][0],
-            'track_number'      => $audio['tags_html']['id3v2']['track_number'][0],
-            'genre'      => $audio['tags_html']['id3v2']['genre'][0],            
+            'title'      => $this->getMetadataTitle($audio),
+            'comment'      => $this->getMetadataComment($audio),
+            'artist'      => $this->getMetadataArtist($audio),
+            'album'      => $this->getMetadataAlbum($audio),
+            'year'      => $this->getMetadataAlbumYear($audio),
+            'track_number'      => $this->getMetadataTrackNumber($audio),
+            'genre'      => $this->getMetadataGenre($audio),            
             'playtime_seconds'      => $audio['playtime_seconds'],
             'playtime_string'      => $audio['playtime_string'],
             //'image'      => $media,
@@ -248,10 +398,24 @@ class AudioProvider extends FileProvider
     {
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
-        } else {
-            $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+        } else {            
+            $arr_metadata = array(
+                'image' =>$media->getMetadataValue('image_src'),
+                'mime_type' =>$media->getMetadataValue('mime_type'),
+                'format' =>$media->getMetadataValue('fileformat')
+            );
+            /*if(isset($arr_metadata['format'])){
+                $path = $arr_metadata;
+            }else{*/
+                $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+            //}
+            
+            //$path = $this->getMetadataImage($metadata);
         }
-
+        //return $path;
+        //return $media['providerMetadata']['image_src'];
+        //return $media->getMetadataValue('image_src');
+        //return $media;
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
     }
 }

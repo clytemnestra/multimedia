@@ -99,13 +99,11 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.gd')->end()
                                 ->arrayNode('allowed_extensions')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array('mp3', 'mp4'))
+                                    ->defaultValue(array('au','snd','mid','rmi','mp4','mp3','aif','aifc','aiff','m3u','ra','ram','Ogg','Linear','PCM','Vorbis','wav','m3u','mp2','s3m','tsi','flac'))
                                 ->end()
                                 ->arrayNode('allowed_mime_types')
                                     ->prototype('scalar')->end()
-                                    ->defaultValue(array(
-                                        'audio/mpeg',
-                                    ))
+                                    ->defaultValue(array('audio/basic','audio/x-au','audio/mid','auido/L24','audio/mp4','audio/x-aiff','audio/aiff','audio/x-mpegurl','audio/vnd.rn-realaudio','audio/ogg','audio/vorbis','audio/vnd.wav','audio/mpeg','audio/x-mpeg-3','audio/x-mpeg','audio/mpeg3','audio/mod','audio/x-mpequrl','audio/x-mid','audio/x-midi','audio/x-pn-realaudio','audio/x-pn-realaudio-plugin','audio/x-realaudio','audio/s3m','audio/tsp-audio','audio/x-wav','audio/flac', 'audio/x-flac'))
                                 ->end()
                             ->end()
                         ->end()

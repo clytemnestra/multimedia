@@ -8,7 +8,10 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-<img src="data:{{options.image_mime}};base64,{{options.image_src}}">
+{% if options.image_mime != ''%}
+    <img src="data:{{options.image_mime}};base64,{{options.image_src}}">
+{% endif %}
+
 
 <script src="http://jwpsrv.com/library/zdGDrr47EeKT4iIACqoQEQ.js"></script>
 <div id='AudioPlayer'></div>
@@ -23,7 +26,7 @@ file that was distributed with this source code.
             }
         },
 	width: '100%',
-	type: 'mp3',
+	type: '{{options.fileformat}}',
         height: '32',
         fallback: 'false',
         autostart: 'false',

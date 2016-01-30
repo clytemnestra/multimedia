@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">    
     <parameters>        
         <parameter key="sonata.media.provider.audio.class">Application\Sonata\MediaBundle\Provider\AudioProvider</parameter>
     </parameters>
-
     <services>
         <service id="sonata.media.provider.audio" class="%sonata.media.provider.audio.class%">
             <tag name="sonata.media.provider" />
@@ -15,12 +13,11 @@
             <argument type="service" id="sonata.media.cdn.server" />
             <argument type="service" id="sonata.media.generator.default" />
             <argument type="service" id="sonata.media.thumbnail.format" />
-            <argument />
-            <argument />
+            <argument >au, snd, mid, rmi, mp4, aif, aifc, aiff, m3u, ra, ram, Ogg, Linear, PCM, Vorbis, wav, m3u, mp2, s3m, tsi, flac</argument>
+            <argument >audio/basic, audio/x-au, audio/mid, auido/L24, audio/mp4, audio/x-aiff, audio/aiff, audio/x-mpegurl, audio/vnd.rn-realaudio, audio/ogg, audio/vorbis, audio/vnd.wav, audio/mpeg, audio/x-mpeg-3, audio/x-mpeg, audio/mpeg3, audio/mod, audio/x-mpequrl, audio/x-mid, audio/x-midi, audio/x-pn-realaudio, audio/x-pn-realaudio-plugin, audio/x-realaudio, audio/s3m, audio/tsp-audio, audio/x-wav, audio/flac, audio/x-flac</argument>
             <argument type="service" id="sonata.media.adapter.image.gd" />
             <argument type="service" id="sonata.media.metadata.proxy" />
-            <argument>%kernel.root_dir%</argument>
-            
+            <argument>%kernel.root_dir%</argument>            
             <call method="setTemplates">
                 <argument type="collection">
                     <argument key='helper_thumbnail'>ApplicationSonataMediaBundle:Provider:thumbnail.html.twig</argument>
