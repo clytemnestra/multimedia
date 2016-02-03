@@ -92,3 +92,8 @@ sonata_block:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts:   [admin]
+            
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp # or any uploader you use in the frontend

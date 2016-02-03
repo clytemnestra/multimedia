@@ -77,6 +77,25 @@
                 <source>sonata.media.provider.video.description</source>
                 <target>Administración de videos</target>
             </trans-unit>
+            
+            
+            
+            <trans-unit id="tv">
+                <source>tv</source>
+                <target>TV</target>
+            </trans-unit>
+            <trans-unit id="news">
+                <source>news</source>
+                <target>Noticias</target>
+            </trans-unit>            
+            <trans-unit id="sonata_category">
+                <source>sonata_category</source>
+                <target>Categorías</target>
+            </trans-unit>
+            <trans-unit id="sonata_collection">
+                <source>sonata_collection</source>
+                <target>Colecciones</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

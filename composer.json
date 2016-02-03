@@ -26,7 +26,8 @@
         "sonata-project/media-bundle": "^2.3",
         "sensio/generator-bundle": "~2.3",
 	"sonata-project/classification-bundle": "~2.2",
-        "phansys/getid3": "~2.1@dev"
+        "phansys/getid3": "~2.1@dev",
+        "oneup/uploader-bundle": "~1.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "~2.7"

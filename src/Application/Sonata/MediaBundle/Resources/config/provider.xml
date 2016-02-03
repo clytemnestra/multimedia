@@ -5,7 +5,7 @@
     <parameters>        
         <parameter key="sonata.media.provider.audio.class">Application\Sonata\MediaBundle\Provider\AudioProvider</parameter>
         <parameter key="sonata.media.provider.video.class">Application\Sonata\MediaBundle\Provider\VideoProvider</parameter>
-        <parameter key="sonata.media.provider.image.class">Sonata\MediaBundle\Provider\ImageProvider</parameter>
+        <parameter key="sonata.media.provider.image.class">Application\Sonata\MediaBundle\Provider\ImageProvider</parameter>
     </parameters>
     <services>
         <service id="sonata.media.provider.audio" class="%sonata.media.provider.audio.class%">

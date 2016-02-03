@@ -37,6 +37,10 @@ class AppKernel extends Kernel
             // Sonata Media Bundle
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            
+            
+            //OneupUploader Bundle
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
