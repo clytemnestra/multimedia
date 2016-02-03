@@ -129,6 +129,34 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
 
+                
+                
+                        ->arrayNode('multipleupload')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('service')->defaultValue('sonata.media.provider.multipleupload')->end()
+                                ->scalarNode('resizer')->defaultValue('sonata.media.resizer.simple')->end()
+                                ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
+                                ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
+                                ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
+                                ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->scalarNode('adapter')->defaultValue('sonata.media.adapter.image.gd')->end()
+                                ->arrayNode('allowed_extensions')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array('jpg', 'png', 'jpeg'))
+                                ->end()
+                                ->arrayNode('allowed_mime_types')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array(
+                                        'image/pjpeg',
+                                        'image/jpeg',
+                                        'image/png',
+                                        'image/x-png',
+                                    ))
+                                ->end()
+                            ->end()
+                        ->end()
+                
                         ->arrayNode('youtube')
                             ->addDefaultsIfNotSet()
                             ->children()

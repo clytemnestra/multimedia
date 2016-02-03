@@ -54,4 +54,20 @@ class MediaAdmin extends BaseMediaAdmin {
             'field_type' => 'choice',
         ));
     }
+    
+    public function getTemplate($name)
+    {
+        switch ($name) {
+            case 'edit':
+                if($this->getRequest()->get('provider') === 'sonata.media.provider.multipleupload'){
+                    return 'ApplicationSonataMediaBundle:MediaAdmin:edit_multiple.html.twig';
+                }else{
+                    return parent::getTemplate($name);
+                }
+                break; 
+            default:
+                return parent::getTemplate($name);
+                break;
+        }
+    }
 }

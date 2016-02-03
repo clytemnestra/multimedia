@@ -4,10 +4,6 @@ namespace Application\Sonata\MediaBundle\Provider;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\MediaBundle\Provider\ImageProvider as BaseImageProvider;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
-
-
 class ImageProvider extends BaseImageProvider{
     
     /**
@@ -27,42 +23,4 @@ class ImageProvider extends BaseImageProvider{
         $formMapper->add('cdnIsFlushable');
         $formMapper->add('binaryContent', 'file', array('required' => false));
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function buildCreateForm(FormMapper $formMapper)
-    {        
-        $formMapper
-                ->tab('Post')
-                    ->with('Content')
-                        ->add('binaryContent', 'file',
-                                    array(
-                                        'multiple' => true, 
-                                        'required' => true, 
-                                        'label' => 'Imágen',
-                                        'attr' => array(
-                                            'data-url' => '/uplodad/media',
-                                        )
-                                    ), array(
-                                    'constraints' => array(
-                                        new NotBlank(),
-                                        new NotNull(),
-                                    )
-                                )
-                        )
-                    ->end()
-                ->end()
-                ->tab('Publish Options')
-                    ->with('')
-                        ->add('title', 'text', array("required" => true))
-                        ->add('keywords', 'text')
-                        //->add('myfieldname', 'myfield')
-                    ->end()
-                ->end();
-    }
-    
-    /*public function getFormTheme() {
-        return array('ApplicationSonataMediaBundle:Admin:myfield_edit.html.twig');
-    }*/
 }

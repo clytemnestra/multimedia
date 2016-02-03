@@ -77,6 +77,10 @@
                 <source>sonata.media.provider.video.description</source>
                 <target>Administración de videos</target>
             </trans-unit>
+            <trans-unit id="sonata.media.provider.multipleupload">
+                <source>sonata.media.provider.multipleupload</source>
+                <target>Subida múltiple de imagenes</target>
+            </trans-unit>
             
             
             
