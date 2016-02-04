@@ -39,7 +39,7 @@ class MultipleFileUploadProvider extends BaseImageProvider{
                     'required' => true, 
                     'label' => 'Imágen',
                     'attr' => array(
-                        'data-url' => '/uplodad/media',
+                        'data-url' => '//jquery-file-upload.appspot.com/',
                     )
                 ),
                 array(
