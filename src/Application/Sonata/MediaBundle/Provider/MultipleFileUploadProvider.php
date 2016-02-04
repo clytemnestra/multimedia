@@ -33,7 +33,8 @@ class MultipleFileUploadProvider extends BaseImageProvider{
      */
     public function buildCreateForm(FormMapper $formMapper)
     {
-        $formMapper->add('binaryContent', 'file', 
+        $formMapper
+            ->add('binaryContent', 'file', 
                 array(
                     'multiple' => true, 
                     'required' => true, 
@@ -44,10 +45,11 @@ class MultipleFileUploadProvider extends BaseImageProvider{
                 ),
                 array(
                     'constraints' => array(
-                    new NotBlank(),
-                    new NotNull(),
-                ),
-        ));
+                        new NotBlank(),
+                        new NotNull(),
+                    ),
+                )
+            );
     }
     
     /**
