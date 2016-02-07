@@ -7,6 +7,10 @@ use Sonata\MediaBundle\Provider\ImageProvider as BaseImageProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
+use Application\Sonata\MediaBundle\Form\Type\GenderType;
+use Application\Sonata\MediaBundle\Form\Type\TelType;
+use Application\Sonata\MediaBundle\Form\Type\MultipleType;
+
 
 class MultipleFileUploadProvider extends BaseImageProvider{
     
@@ -34,6 +38,7 @@ class MultipleFileUploadProvider extends BaseImageProvider{
     public function buildCreateForm(FormMapper $formMapper)
     {
         $formMapper
+            /*
             ->add('binaryContent', 'file', 
                 array(
                     'multiple' => true, 
@@ -49,7 +54,62 @@ class MultipleFileUploadProvider extends BaseImageProvider{
                         new NotNull(),
                     ),
                 )
-            );
+            )
+                
+            */
+            
+            //->add('author', 'sonata_type_model', array(), array('edit' => 'list'))
+            //->add('media', 'sonata_media_type', ['label' => false, 'provider' =>  'sonata.media.provider.multipleupload', 'context' => 'default'])
+            // ->add('authorName', null, array('required' => false))
+            
+                
+            //->add('location',  new TelType(), array('label' => 'Phone Number'))
+            //  ->add('location', 'tel', array('label' => 'Phone Number'))
+            //->add('keywords', MultipleType::class, array('label' => 'Attach images'))
+            ->add('binaryContent', 'multiple', 
+                array(
+                    'label' => '',
+                    'multiple' => true, 
+                    'required' => false, 
+                    'label' => 'Imágen',
+                    'attr' => array(
+                        'data-url' => '//jquery-file-upload.appspot.com/',
+                        'id' => 'fileupload', // no funciona
+                        'class' => 'fileupload', // append the class
+                    )
+                ),
+                array(
+                    'constraints' => array(
+                        new NotBlank(),
+                        new NotNull(),
+                    ),
+                )
+            )
+                
+            // ->add('keywords', 'sonata_media_type', ['label' => false, 'provider' =>  'sonata.media.provider.multipleupload', 'context' => 'default'])    
+            /*
+             * Collecciones
+            ->add('title', 'collection', array(
+                 'type' => 'sonata_media_type',
+                 'options' => array(
+                     'provider' => 'sonata.media.provider.multipleupload',
+                     'context'  => 'default',
+                     'empty_on_new' => true,
+                 ),  
+                 'allow_add' => true,
+                 'by_reference' => false,
+             ))*/ 
+            ;
+            /*->add(
+                    'media', 
+                    'sonata_media_type', 
+                    array(
+                        'provider' => 'sonata.media.provider.multipleupload',
+                        'context'  => 'default'
+                    )
+                )*/
+                
+        ;
     }
     
     /**

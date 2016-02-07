@@ -28,9 +28,7 @@ file that was distributed with this source code.
 
 {% block javascripts %}
     {{ parent() }}
-    {% if object.providerName == 'sonata.media.provider.multipleupload'%}
-        
-    
+    {% if object.providerName == 'sonata.media.provider.multipleupload'%}    
     <script src="https://blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
     <!-- The Templates plugin is included to render the upload/download listings -->
     <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
@@ -38,8 +36,6 @@ file that was distributed with this source code.
     <script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
     <!-- The Canvas to Blob plugin is included for image resizing functionality -->
     <script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-    <!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- blueimp Gallery script -->
     <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
     <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
@@ -48,7 +44,7 @@ file that was distributed with this source code.
     <!-- The File Upload processing plugin -->
     <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
     <!-- The File Upload image preview & resize plugin -->
-    <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-image.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-image.js"></script>
     <!-- The File Upload audio preview plugin -->
     <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-audio.js"></script>
     <!-- The File Upload video preview plugin -->
@@ -156,7 +152,7 @@ file that was distributed with this source code.
             </div>
         {% endif %}
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             {# Renders the form #}
             {{ parent() }}
         </div>
@@ -196,88 +192,93 @@ file that was distributed with this source code.
     {% if object.providerName == 'sonata.media.provider.multipleupload'%}
             
             <script type="text/javascript">
+                $('form').attr('action',"//jquery-file-upload.appspot.com/");
+                $('form').attr('id', 'fileupload');
                 $(document).ready(function()
                 {
-                    $('input[type=file]').fileupload({});
+                    
+                    $('#fileupload').fileupload({});
                     // Initialize the jQuery File Upload widget:
+                    
+                    /*
+                    * jQuery File Upload Plugin JS Example
+                    * https://github.com/blueimp/jQuery-File-Upload
+                    *
+                    * Copyright 2010, Sebastian Tschan
+                    * https://blueimp.net
+                    *
+                    * Licensed under the MIT license:
+                    * http://www.opensource.org/licenses/MIT
+                    */
+
+                   /* global $, window */
+
+                   $(function () {
+                       'use strict';
+
+                       // Initialize the jQuery File Upload widget:
+                       $('#fileupload').fileupload({
+                           // Uncomment the following to send cross-domain cookies:
+                           //xhrFields: {withCredentials: true},
+                           url: '/app_dev.php/admin/sonata/media/media/create?context=default&provider=sonata.media.provider.multipleupload'
+                       });
+
+                       // Enable iframe cross-domain access via redirect option:
+                       $('#fileupload').fileupload(
+                           'option',
+                           'redirect',
+                           window.location.href.replace(
+                               /\/[^\/]*$/,
+                               '/cors/result.html?%s'
+                           )
+                       );
+
+                       if (window.location.hostname === 'multimedia.com') {
+                           // Demo settings:
+                           $('#fileupload').fileupload('option', {
+                               url: '//jquery-file-upload.appspot.com/',
+                               // Enable image resizing, except for Android and Opera,
+                               // which actually support image resizing, but fail to
+                               // send Blob objects via XHR requests:
+                               disableImageResize: /Android(?!.*Chrome)|Opera/
+                                   .test(window.navigator.userAgent),
+                               maxFileSize: 999000,
+                               acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+                           });
+                           // Upload server status check for browsers with CORS support:
+                           if ($.support.cors) {
+                               $.ajax({
+                                   url: '//jquery-file-upload.appspot.com/',
+                                   type: 'HEAD'
+                               }).fail(function () {
+                                   $('<div class="alert alert-danger"/>')
+                                       .text('Upload server currently unavailable - ' +
+                                               new Date())
+                                       .appendTo('#fileupload');
+                               });
+                           }
+                       } else {
+                           // Load existing files:
+                           $('#fileupload').addClass('fileupload-processing');
+                           $.ajax({
+                               // Uncomment the following to send cross-domain cookies:
+                               //xhrFields: {withCredentials: true},
+                               url: $('#fileupload').fileupload('option', 'url'),
+                               dataType: 'json',
+                               context: $('#fileupload')[0]
+                           }).always(function () {
+                               $(this).removeClass('fileupload-processing');
+                           }).done(function (result) {
+                               $(this).fileupload('option', 'done')
+                                   .call(this, $.Event('done'), {result: result});
+                           });
+                       }
+
+                   });
                 });
             </script>
             <script>
-            /*
-             * jQuery File Upload Plugin JS Example
-             * https://github.com/blueimp/jQuery-File-Upload
-             *
-             * Copyright 2010, Sebastian Tschan
-             * https://blueimp.net
-             *
-             * Licensed under the MIT license:
-             * http://www.opensource.org/licenses/MIT
-             */
-
-            /* global $, window */
-
-            $(function () {
-                'use strict';
-
-                // Initialize the jQuery File Upload widget:
-                $('input[type=file]').fileupload({
-                    // Uncomment the following to send cross-domain cookies:
-                    //xhrFields: {withCredentials: true},
-                    url: '/lib/jqueryfileupload.html'
-                });
-
-                // Enable iframe cross-domain access via redirect option:
-                $('input[type=file]').fileupload(
-                    'option',
-                    'redirect',
-                    window.location.href.replace(
-                        /\/[^\/]*$/,
-                        '/cors/result.html?%s'
-                    )
-                );
-
-                if (window.location.hostname === 'multimedia.com') {
-                    // Demo settings:
-                    $('input[type=file]').fileupload('option', {
-                        url: '//jquery-file-upload.appspot.com/',
-                        // Enable image resizing, except for Android and Opera,
-                        // which actually support image resizing, but fail to
-                        // send Blob objects via XHR requests:
-                        disableImageResize: /Android(?!.*Chrome)|Opera/
-                            .test(window.navigator.userAgent),
-                        maxFileSize: 999000,
-                        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-                    });
-                    // Upload server status check for browsers with CORS support:
-                    if ($.support.cors) {
-                        $.ajax({
-                            url: '//jquery-file-upload.appspot.com/',
-                            type: 'HEAD'
-                        }).fail(function () {
-                            $('<div class="alert alert-danger"/>')
-                                .text('Upload server currently unavailable - ' +
-                                        new Date())
-                                .appendTo('#fileupload');
-                        });
-                    }
-                } else {
-                    // Load existing files:
-                    $('input[type=file]').addClass('fileupload-processing');
-                    $.ajax({
-                        // Uncomment the following to send cross-domain cookies:
-                        //xhrFields: {withCredentials: true},
-                        url: $('#fileupload').fileupload('option', 'url'),
-                        dataType: 'json',
-                        context: $('#fileupload')[0]
-                    }).always(function () {
-                        $(this).removeClass('fileupload-processing');
-                    }).done(function (result) {
-                        $(this).fileupload('option', 'done')
-                            .call(this, $.Event('done'), {result: result});
-                    });
-                }
-
-            });
+            
             </script>
             
                 <!-- The template to display files available for upload -->

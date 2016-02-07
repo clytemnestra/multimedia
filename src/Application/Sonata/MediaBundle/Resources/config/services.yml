@@ -1,0 +1,5 @@
+services:
+    application.sonata.media.form.type.multiple:
+        class: Application\Sonata\MediaBundle\Form\Type\MultipleType
+        tags:
+            - { name: form.type, alias: multiple  }

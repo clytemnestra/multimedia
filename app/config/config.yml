@@ -28,6 +28,9 @@ framework:
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
+        form:
+            resources:
+                - 'ApplicationSonataMediaBundle:Form'
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -97,3 +100,22 @@ oneup_uploader:
     mappings:
         gallery:
             frontend: blueimp # or any uploader you use in the frontend
+            
+            
+#twig:
+#    form_themes:
+#        #resources:
+#        - 'ApplicationSonataMediaBundle:Form:fields.html.twig'
+#        - 'ApplicationSonataMediaBundle:Form:form_admin_fields.html.twig'
+#        - 'ApplicationSonataMediaBundle:Form:gender.html.twig'
+            
+#twig:
+#    form_themes:
+#        - 'form/fields.html.twig'
+#            
+            
+#framework:
+#    templating:
+#        form:
+#            resources:
+#                - ':form:fields.html.php'

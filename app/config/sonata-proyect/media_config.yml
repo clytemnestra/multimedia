@@ -14,7 +14,23 @@ parameters:
     
 
 
+services:
+    ApplicationSonataMediaBundle.form.type.gender:
+        class: Application\Sonata\MediaBundle\Form\Type\GenderType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: gender }
+    ApplicationSonataMediaBundle.form.type.tel:
+        class: Application\Sonata\MediaBundle\Form\Type\TelType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: tel }
+            
+    #ApplicationSonataMediaBundle.form.type.multiple:
 
+    
+            
+            
 # services:
 #    sonata.media.provider.audio:
 #        class: Application\Sonata\MediaBundle\Provider\AudioProvider
