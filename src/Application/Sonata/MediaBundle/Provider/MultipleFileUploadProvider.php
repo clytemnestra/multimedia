@@ -10,7 +10,26 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Application\Sonata\MediaBundle\Form\Type\GenderType;
 use Application\Sonata\MediaBundle\Form\Type\TelType;
 use Application\Sonata\MediaBundle\Form\Type\MultipleType;
+use Sonata\MediaBundle\Model\MediaInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
+
+
+
+use Gaufrette\Filesystem;
+
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Model\Metadata;
+use Sonata\MediaBundle\CDN\CDNInterface;
+use Sonata\MediaBundle\Generator\GeneratorInterface;
+use Sonata\MediaBundle\Metadata\MetadataBuilderInterface;
+
+use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MultipleFileUploadProvider extends BaseImageProvider{
     
@@ -149,4 +168,134 @@ class MultipleFileUploadProvider extends BaseImageProvider{
     /*public function getFormTheme() {
         return array('ApplicationSonataMediaBundle:Admin:myfield_edit.html.twig');
     }*/
+    
+    /**
+     * @throws \RuntimeException
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return
+     */
+    protected function fixBinaryContent(MediaInterface $media)
+    {
+        /*if(isset($media->getBinaryContent()[0])){
+            $media->setBinaryContent() = $media->getBinaryContent()[0];
+        }*/
+        
+        if ($media->getBinaryContent()[0] === null) {
+            return;
+        }
+
+        // if the binary content is a filename => convert to a valid File
+        if (!$media->getBinaryContent()[0] instanceof File) {
+            if (!is_file($media->getBinaryContent()[0])) {
+                throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent()[0]);
+            }
+            
+            $binaryContent = new File($media->getBinaryContent()[0]);
+            $media->setBinaryContent($binaryContent);
+        }
+    }
+    
+    /**
+     * @throws \RuntimeException
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     */
+    protected function fixFilename(MediaInterface $media)
+    {
+        if ($media->getBinaryContent()[0] instanceof UploadedFile) {
+            $media->setName($media->getName() ?: $media->getBinaryContent()[0]->getClientOriginalName());
+            $media->setMetadataValue('filename', $media->getBinaryContent()[0]->getClientOriginalName());
+        } elseif ($media->getBinaryContent()[0] instanceof File) {
+            $media->setName($media->getName() ?: $media->getBinaryContent()[0]->getBasename());
+            $media->setMetadataValue('filename', $media->getBinaryContent()[0]->getBasename());
+        }
+
+        // this is the original name
+        if (!$media->getName()) {
+            throw new \RuntimeException('Please define a valid media\'s name');
+        }
+    }
+    
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return string
+     */
+    protected function generateReferenceName(MediaInterface $media)
+    {
+        return sha1($media->getName().rand(11111, 99999)).'.'.$media->getBinaryContent()[0]->guessExtension();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function validate(ErrorElement $errorElement, MediaInterface $media)
+    {
+        if (!$media->getBinaryContent()[0] instanceof \SplFileInfo) {
+            return;
+        }
+
+        if ($media->getBinaryContent()[0] instanceof UploadedFile) {
+            $fileName = $media->getBinaryContent()[0]->getClientOriginalName();
+        } elseif ($media->getBinaryContent()[0] instanceof File) {
+            $fileName = $media->getBinaryContent()[0]->getFilename();
+        } else {
+            throw new \RuntimeException(sprintf('Invalid binary content type: %s', get_class($media->getBinaryContent()[0])));
+        }
+
+        if (!in_array(strtolower(pathinfo($fileName, PATHINFO_EXTENSION)), $this->allowedExtensions)) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Invalid extensions')
+                ->end();
+        }
+
+        if (!in_array($media->getBinaryContent()[0]->getMimeType(), $this->allowedMimeTypes)) {
+            $errorElement
+                ->with('binaryContent')
+                    ->addViolation('Invalid mime type : '.$media->getBinaryContent()[0]->getMimeType())
+                ->end();
+        }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function doTransform(MediaInterface $media)
+    {
+        $this->fixBinaryContent($media);
+        $this->fixFilename($media);
+
+        // this is the name used to store the file
+        if (!$media->getProviderReference()) {
+            $media->setProviderReference($this->generateReferenceName($media));
+        }
+
+        if ($media->getBinaryContent()[0]) {
+            $media->setContentType($media->getBinaryContent()[0]->getMimeType());
+            $media->setSize($media->getBinaryContent()[0]->getSize());
+        }
+
+        $media->setProviderStatus(MediaInterface::STATUS_OK);
+    }
+    
+    /**
+     * Set the file contents for an image.
+     *
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     * @param string                                   $contents path to contents, defaults to MediaInterface BinaryContent
+     */
+    protected function setFileContents(MediaInterface $media, $contents = null)
+    {
+        $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
+
+        if (!$contents) {
+            $contents = $media->getBinaryContent()[0]->getRealPath();
+        }
+
+        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
+        $file->setContent(file_get_contents($contents), $metadata);
+    }
 }
