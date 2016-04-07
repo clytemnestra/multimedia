@@ -3,16 +3,22 @@ parameters:
     #sonata.media.form.type.media.class: Application\Sonata\MediaBundle\Form\Type\MediaType  #Hecho para solucionar lo del allow_extra_fields
     sonata.media.admin.media.class: Application\Sonata\MediaBundle\Admin\MediaAdmin
     
+    #Providers
     sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\FileProvider
     sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\ImageProvider
     sonata.media.provider.dailymotion.class: Application\Sonata\MediaBundle\Provider\DailyMotionProvider
     sonata.media.provider.youtube.class: Application\Sonata\MediaBundle\Provider\YouTubeProvider
-    sonata.media.provider.vimeo.class: Application\Sonata\MediaBundle\Provider\VimeoProvider
-    sonata.media.dependencyinjection.class: Application\Sonata\MediaBundle\DependencyInjection\SonataMediaExtension
+    sonata.media.provider.vimeo.class: Application\Sonata\MediaBundle\Provider\VimeoProvider    
     sonata.media.provider.audio.class: Application\Sonata\MediaBundle\Provider\AudioProvider
     sonata.media.provider.video.class: Application\Sonata\MediaBundle\Provider\VideoProvider
+    sonata.media.provider.multipleupload.class: Application\Sonata\MediaBundle\Provider\MultipleFileUploadProvider
+        
+    #Controllers
+    sonata.media.controller.mediaadmincontroller.class: Application\Sonata\MediaBundle\Controller\MediaAdminController
     
-
+    #DependencyInjection
+    sonata.media.dependencyinjection.configuration.class: Application\Sonata\MediaBundle\DependencyInjection\Configuration
+    sonata.media.dependencyinjection.class: Application\Sonata\MediaBundle\DependencyInjection\SonataMediaExtension
 
 services:
     ApplicationSonataMediaBundle.form.type.gender:
@@ -151,6 +157,8 @@ sonata_media:
             create:     false
     providers:
         image:
+            resizer: sonata.media.resizer.square
+        multipleupload:
             resizer: sonata.media.resizer.square
         file:
             service:    sonata.media.provider.file

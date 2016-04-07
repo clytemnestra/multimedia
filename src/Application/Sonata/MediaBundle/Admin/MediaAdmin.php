@@ -72,12 +72,6 @@ class MediaAdmin extends BaseMediaAdmin {
         if (!$media || !$media->getProviderName()) {
             return;
         }
-        /*
-        echo "<pre>";
-        print_r($media);
-        print_r($formMapper);
-        echo "</pre>";
-        exit();*/
 
         $formMapper->getFormBuilder()->addModelTransformer(new ProviderDataTransformer($this->pool, $this->getClass()), true);
 
